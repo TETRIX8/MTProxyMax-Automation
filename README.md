@@ -29,35 +29,42 @@ curl -sL https://raw.githubusercontent.com/TETRIX8/MTProxyMax-Automation/main/se
 
 ---
 
-## 📡 API Документация
+## 📡 API Документация (Примеры для вашего сервера)
 
-API сервер работает на порту `8000` каждого Worker-сервера.
+API сервер работает на порту `8000`.
 
 ### Авторизация
 Все запросы должны содержать заголовок:
 `Authorization: Bearer MTProxyMaxSecretToken123`
 
-### 1. Получить тестовый ключ
+### 1. Получить тестовый ключ (на 1 день)
 Выдает ключ из пула тестовых со сроком действия **1 день**.
 
-*   **URL:** `GET /get-test`
-*   **Ответ:**
+**Пример запроса:**
+```bash
+curl -X GET "http://38.244.138.57:8000/get-test" -H "Authorization: Bearer MTProxyMaxSecretToken123"
+```
+
+**Пример ответа:**
 ```json
 {
-  "link": "https://t.me/proxy?server=IP&port=443&secret=...",
-  "label": "test_1775393494"
+  "link": "https://t.me/proxy?server=38.244.138.57&port=443&secret=...",
+  "label": "test_1775396181"
 }
 ```
 
-### 2. Получить обычный ключ
+### 2. Получить обычный ключ (на любой период)
 Выдает ключ из пула обычных с заданным периодом.
 
-*   **URL:** `GET /get-regular?label=<имя>&period=<срок>`
-*   **Параметры:**
-    *   `label`: Уникальное имя пользователя (обязательно).
-    *   `period`: Срок действия в формате Linux date (например, `+30days`, `+1year`).
-*   **Пример запроса:**
-`curl -X GET "http://IP:8000/get-regular?label=client_01&period=+30days" -H "Authorization: Bearer MTProxyMaxSecretToken123"`
+**Пример запроса (на 30 дней):**
+```bash
+curl -X GET "http://38.244.138.57:8000/get-regular?label=client_01&period=+30days" -H "Authorization: Bearer MTProxyMaxSecretToken123"
+```
+
+**Пример запроса (на 1 год):**
+```bash
+curl -X GET "http://38.244.138.57:8000/get-regular?label=client_01&period=+1year" -H "Authorization: Bearer MTProxyMaxSecretToken123"
+```
 
 ---
 
