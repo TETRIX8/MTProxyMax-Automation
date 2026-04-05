@@ -1,0 +1,10 @@
+#!/bin/bash
+WORKER_IP=$1
+WORKER_PASS=$2
+if [ -z "$WORKER_IP" ] || [ -z "$WORKER_PASS" ]; then
+    echo "Usage: deploy-worker <IP> <PASS>"
+    exit 1
+fi
+echo "Deploying to $WORKER_IP..."
+apt-get update -qq && apt-get install -y sshpass -qq > /dev/null
+sshpass -p "$WORKER_PASS" ssh -o StrictHostKeyChecking=no root@$WORKER_IP "curl -sL https://raw.githubusercontent.com/TETRIX8/Mtproxymax-script-/main/setup.sh | bash -s $WORKER_IP $WORKER_PASS"
